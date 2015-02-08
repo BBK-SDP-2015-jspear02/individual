@@ -29,16 +29,18 @@ public class testMulInstruction {
 		assertEquals(24, m.getRegisters().getRegister(21));
 	}
 	
+	@Test
 	public void testMul_zero(){
-		Instruction ins = new MulInstruction("f3",21,10,13);
+		Instruction ins = new MulInstruction("f3",21,10,12);
 		ins.execute(m);
 		assertEquals(0, m.getRegisters().getRegister(21));
 	}
 	
+	@Test
 	public void testMul_negative(){
 		Instruction ins = new MulInstruction("f3",5,11,13);
 		ins.execute(m);
-		assertEquals(-8, m.getRegisters().getRegister(21));
+		assertEquals(-8, m.getRegisters().getRegister(5));
 	}
 
 }
