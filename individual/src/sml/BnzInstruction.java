@@ -10,16 +10,10 @@ import java.util.ArrayList;
 
 public class BnzInstruction extends Instruction {
 
-	private int register;
 	private String nextLabel;
 
-	public BnzInstruction(String label, String op) {
-		super(label, op);
-	}
-
 	public BnzInstruction(String label, int register, String nextLabel) {
-		this(label, "bnz");
-		this.register = register;
+		super(label, "bnz", register);
 		this.nextLabel = nextLabel;
 	}
 
@@ -28,6 +22,7 @@ public class BnzInstruction extends Instruction {
 		//If the value in the register is not zero the PC will need to be set to that of the instruction specified
 		//Otherwise do nothing. 
 		if (m.getRegisters().getRegister(this.register) != 0) {
+			System.out.println( " ssss" + this.register);
 			ArrayList<Instruction> prog = m.getProg();
 			for (int i = 0; i < prog.size(); i++){
 				if (prog.get(i).label.equals(this.nextLabel)){

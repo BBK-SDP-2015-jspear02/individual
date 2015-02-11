@@ -46,7 +46,7 @@ public class Machine {
 		System.out.println("Ending program execution.");
 
 		System.out.println("Values of registers at program termination:");
-		System.out.println(m.getRegistersText() + ".");
+		System.out.println(m.getRegisters() + ".");
 	}
 
 	// Print the program
@@ -68,6 +68,7 @@ public class Machine {
 		while (getPc() < getProg().size()) {
 			Instruction ins = getProg().get(getPc());
 			setPc(getPc() + 1);
+			System.out.println(ins.toString());
 			ins.execute(this);
 		}
 	}

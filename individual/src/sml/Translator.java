@@ -1,13 +1,15 @@
 package sml;
 
-import lombok.Data;
-
 
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
+import java.lang.Class;
+import java.lang.ClassNotFoundException;
+import java.lang.reflect.Constructor;
+
 
 /*
  * The translator of a <b>S</b><b>M</b>al<b>L</b> program.
@@ -79,38 +81,28 @@ public class Translator {
 		int s1; // Possible operands of the instruction
 		int s2;
 		int r;
-		int x;
-
 		if (line.equals(""))
 			return null;
 
 		String ins = scan();
-		switch (ins) {
-		case "add":
-			r = scanInt();
-			s1 = scanInt();
-			s2 = scanInt();
-			return new AddInstruction(label, r, s1, s2);
-		case "lin":
-			r = scanInt();
-			s1 = scanInt();
-			return new LinInstruction(label, r, s1);
-		case "mul":
-			r = scanInt();
-			s1 = scanInt();
-			s2 = scanInt();			
-			return new MulInstruction(label, r, s1, s2);
-		case "div":
-			r = scanInt();
-			s1 = scanInt();
-			s2 = scanInt();			
-			return new DivInstruction(label, r, s1, s2);
-		case "sub":
-			r = scanInt();
-			s1 = scanInt();
-			s2 = scanInt();			
-			return new SubInstruction(label, r, s1, s2);
+		try {
+			Class<?> instruct = Class.forName("sml."+ ucfirst(ins) + "Instruction");
+			Constructor[] allConstructors = instruct.getDeclaredConstructors();
+			
+			for (Constructor ctor : allConstructors) {
+				
+				Class<?>[] pType  = ctor.getParameterTypes();
+				for (int i = 0; i < pType.length; i++) {
+					System.out.println(ucfirst(ins) + " : " + pType[i]);
+				}
+
+			}	
+		} catch (ClassNotFoundException ex) {
+			System.out.println("sml."+ ins + "Instruction doesn't exist");
 		}
+
+
+	
 
 		// You will have to write code here for the other instructions.
 
@@ -148,5 +140,13 @@ public class Translator {
 		} catch (NumberFormatException e) {
 			return Integer.MAX_VALUE;
 		}
+	}
+	
+	private static String ucfirst(String word) {
+		String ucWord = "";
+		if ((word.length() > 0) && (word != null)){
+			ucWord = Character.toUpperCase(word.charAt(0)) + word.substring(1);
+		}
+		return ucWord;
 	}
 }
