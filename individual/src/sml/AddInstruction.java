@@ -3,7 +3,7 @@ package sml;
 /**
  * This class ....
  * 
- * @author someone
+ * @author John Spear
  */
 
 public class AddInstruction extends Instruction {
@@ -17,7 +17,7 @@ public class AddInstruction extends Instruction {
 	}
 
 	public AddInstruction(String label, int result, int op1, int op2) {
-		this(label, "add");
+		this(label, "add");		
 		this.result = result;
 		this.op1 = op1;
 		this.op2 = op2;
