@@ -11,7 +11,7 @@ import java.lang.reflect.Method;
 public abstract class Instruction {
 	protected String label;
 	protected String opcode;
-	protected int result;
+	protected int register;
 	protected int op1;
 	protected int op2;
 
@@ -22,10 +22,14 @@ public abstract class Instruction {
 		this.label = l;
 		this.opcode = op;
 	}
-	
-	public Instruction(String label, String opcode, int result, int op1, int op2) {
-		this(label, opcode);
-		this.result = result;
+
+	public Instruction(String l, String op, int register) {
+		this(l,op);
+		this.register = register;
+	}	
+
+	public Instruction(String label, String opcode, int register, int op1, int op2) {
+		this(label, opcode, register);
 		this.op1 = op1;
 		this.op2 = op2;
 	}
