@@ -1,6 +1,6 @@
 package sml;
 
-import lombok.Data;
+import lombok.Data; 
 
 /**
  * This class ....

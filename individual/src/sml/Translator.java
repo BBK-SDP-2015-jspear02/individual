@@ -9,6 +9,7 @@ import java.util.Scanner;
 import java.lang.Class;
 import java.lang.ClassNotFoundException;
 import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
 
 
 /*
@@ -72,15 +73,12 @@ public class Translator {
 			return false;
 		}
 		return true;
-	}
+	} 
 
 	// line should consist of an MML instruction, with its label already
 	// removed. Translate line into an instruction with label label
 	// and return the instruction
 	public Instruction getInstruction(String label) {
-		int s1; // Possible operands of the instruction
-		int s2;
-		int r;
 		if (line.equals(""))
 			return null;
 
@@ -88,25 +86,56 @@ public class Translator {
 		try {
 			Class<?> instruct = Class.forName("sml."+ ucfirst(ins) + "Instruction");
 			Constructor[] allConstructors = instruct.getDeclaredConstructors();
-			
+			//The largest constructor is the one to use.
+			Constructor largest = null;
 			for (Constructor ctor : allConstructors) {
-				
-				Class<?>[] pType  = ctor.getParameterTypes();
-				for (int i = 0; i < pType.length; i++) {
-					System.out.println(ucfirst(ins) + " : " + pType[i]);
+				if (largest == null) {
+					largest = ctor;
+				} else if (ctor.getParameterCount() > largest.getParameterCount()) {
+					largest = ctor;
 				}
+			}
+			//Get the correct params back from the file
+			Object[] params = getParams(label, largest);
+			Instruction newInstruct = null;
+			
+			try {
+				newInstruct = (Instruction) largest.newInstance(params);
+			} catch (InstantiationException e) {
+				System.out.println(e.getMessage());
+			} catch (IllegalAccessException e) {
+				System.out.println(e.getMessage());
+			} catch (IllegalArgumentException e) {
+				System.out.println(e.getMessage());
+			} catch (InvocationTargetException e) {
+				System.out.println(e.getMessage());
+			}
 
-			}	
+			return newInstruct;
 		} catch (ClassNotFoundException ex) {
+
 			System.out.println("sml."+ ins + "Instruction doesn't exist");
+			return null;
 		}
-
-
+		
+	}
 	
+	public Object[] getParams(String label, Constructor con) {
+		Object[] params = new Object[con.getParameterCount()];
+		//Set the first item to be the label
+		params[0] = label;
+		Class<?>[] paramType  = con.getParameterTypes();
+		//Skip the first one. It's already been set.
+		for (int i = 1; i < paramType.length; i++) {
+			if (paramType[i].getTypeName().equals("int")){
+				params[i] = scanInt();
+			} else {
+				params[i] = scan();
+			}
 
-		// You will have to write code here for the other instructions.
-
-		return null;
+		}
+		printArr(params);
+		return params;
 	}
 
 	/*
@@ -148,5 +177,11 @@ public class Translator {
 			ucWord = Character.toUpperCase(word.charAt(0)) + word.substring(1);
 		}
 		return ucWord;
+	}
+	
+	private void printArr(Object[] arr){
+		for(int i = 0; i < arr.length; i++){
+			System.out.println(arr[i]);
+		}
 	}
 }

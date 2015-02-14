@@ -1,6 +1,6 @@
 package sml;
 
-/**
+/** 
  * Class for dividing values and storing them in the set register
  * 
  * @author John Spear

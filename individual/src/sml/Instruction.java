@@ -1,7 +1,5 @@
 package sml;
-import java.lang.reflect.Constructor;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
+
 /**
  * This class is the superclass of the classes for machine instructions
  * 

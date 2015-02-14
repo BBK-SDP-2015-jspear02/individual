@@ -4,7 +4,7 @@ package sml;
  * This class ....
  * 
  * @author someone
- */
+ */ 
 
 public class LinInstruction extends Instruction {
 	private int register;
@@ -18,7 +18,6 @@ public class LinInstruction extends Instruction {
 		super(label, "lin");
 		this.register = register;
 		this.value = value;
-
 	}
 
 	@Override

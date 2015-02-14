@@ -1,6 +1,6 @@
 package sml;
 
-import java.util.ArrayList;
+import java.util.ArrayList;  
 
 import lombok.Data;
 
@@ -16,7 +16,7 @@ public class Machine {
 
 	// The SML program, consisting of prog.size() instructions, each
 	// of class Instruction (or one of its subclasses)
-	private ArrayList<Instruction> prog;
+	private ArrayList<Instruction> prog; 
 
 	// The registers of the SML machine
 	private Registers registers;

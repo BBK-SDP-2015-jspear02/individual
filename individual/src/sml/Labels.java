@@ -3,7 +3,7 @@ package sml;
 import java.util.ArrayList;
 
 //An instance contains a list of Strings, called "labels",
-//in the order in which they were added to the list. 
+//in the order in which they were added to the list.  
 
 public class Labels {
 

@@ -27,7 +27,7 @@ public class testBnzInstruction {
 		m.getProg().add(new BnzInstruction("f3",1,"f2"));
 		m.getProg().add(new BnzInstruction("f4",2,"f1"));		
 	}
-	
+	 
 	@Test
 	public void testBnz_notZero(){
 		m.getProg().get(2).execute(m);

@@ -1,5 +1,5 @@
 package sml;
-
+ 
 /**
  * Class for multiplying values and storing them in the set register
  * 

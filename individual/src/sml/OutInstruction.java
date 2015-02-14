@@ -1,13 +1,12 @@
 package sml;
 
-/**
+/** 
  * This class ....
  * 
  * @author John Spear
  */
 
 public class OutInstruction extends Instruction {
-	private int register;
 
 	public OutInstruction(String label, int register) {
 		super(label, "out", register);
@@ -20,6 +19,6 @@ public class OutInstruction extends Instruction {
 
 	@Override
 	public String toString() {
-		return super.toString() + " Prints contents of " + register + " to java console";
+		return super.toString() + " prints contents of " + register + " to java console";
 	}
 }
