@@ -134,7 +134,7 @@ public class Translator {
 			}
 
 		}
-		printArr(params);
+		//printArr(params);
 		return params;
 	}
 
@@ -179,6 +179,7 @@ public class Translator {
 		return ucWord;
 	}
 	
+	//Just for testing
 	private void printArr(Object[] arr){
 		for(int i = 0; i < arr.length; i++){
 			System.out.println(arr[i]);

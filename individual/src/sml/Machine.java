@@ -35,7 +35,7 @@ public class Machine {
 	public static void main(String[] args) {
 
 		Machine m = new Machine();
-		Translator t = new Translator("code.sml");
+		Translator t = new Translator(args[0]);
 		t.readAndTranslate(m.getLabels(), m.getProg());
 
 		System.out.println("Here is the program; it has " + m.getProg().size() + " instructions.");
@@ -68,12 +68,9 @@ public class Machine {
 		while (getPc() < getProg().size()) {
 			Instruction ins = getProg().get(getPc());
 			setPc(getPc() + 1);
-			System.out.println(ins.toString());
 			ins.execute(this);
 		}
 	}
-
-
 
 	public String getRegistersText(){
 		String output = "";

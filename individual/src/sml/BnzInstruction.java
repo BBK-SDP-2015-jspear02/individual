@@ -22,7 +22,6 @@ public class BnzInstruction extends Instruction {
 		//If the value in the register is not zero the PC will need to be set to that of the instruction specified
 		//Otherwise do nothing. 
 		if (m.getRegisters().getRegister(this.register) != 0) {
-			System.out.println( " ssss" + this.register);
 			ArrayList<Instruction> prog = m.getProg();
 			for (int i = 0; i < prog.size(); i++){
 				if (prog.get(i).label.equals(this.nextLabel)){
