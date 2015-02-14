@@ -1,9 +1,9 @@
 package sml;
 
 /**
- * This class .... 
+ * This class takes subtracts the value of one register from the value of another register and places it in a third register
  * 
- * @author someone
+ * @author John Spear
  */
 
 public class SubInstruction extends Instruction {
@@ -11,7 +11,11 @@ public class SubInstruction extends Instruction {
 	public SubInstruction(String label, int result, int op1, int op2) {
 		super(label,"sub",result, op1, op2);
 	}
-
+	
+	/**
+	 * This function subtracts the contents of one register from the content of another register and places the result in another register
+	 * 	 * @param m Machine The machine that this is being executed on 
+	 */
 	@Override
 	public void execute(Machine m) {
 		int value1 = m.getRegisters().getRegister(op1);

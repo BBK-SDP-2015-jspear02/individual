@@ -12,6 +12,11 @@ public class DivInstruction extends Instruction {
 		super(label,"div",result, op1, op2);
 	}
 
+	/**
+	 * This function divides one value by another and places it in a register.
+	 * Checks for division by zero and returns 0 if that's the case.
+	 * @param m Machine The machine that this is being executed on 
+	 */
 	@Override
 	public void execute(Machine m) {
 		int value1 = m.getRegisters().getRegister(op1);

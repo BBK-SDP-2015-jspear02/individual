@@ -12,6 +12,10 @@ public class MulInstruction extends Instruction {
 		super(label,"mul",result, op1, op2);
 	}
 
+	/**
+	 * This function multiples the values in two registers and stores them in another register.
+	 * 	 * @param m Machine The machine that this is being executed on 
+	 */
 	@Override
 	public void execute(Machine m) {
 		int value1 = m.getRegisters().getRegister(op1);

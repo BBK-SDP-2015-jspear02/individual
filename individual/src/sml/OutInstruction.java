@@ -1,7 +1,7 @@
 package sml;
 
 /** 
- * This class ....
+ * This class prints out the contents of a register.
  * 
  * @author John Spear
  */

@@ -75,18 +75,24 @@ public class Translator {
 		return true;
 	} 
 
-	// line should consist of an MML instruction, with its label already
-	// removed. Translate line into an instruction with label label
-	// and return the instruction
+	/**
+	 * Each line of text in the file should contain one instruction split by space. 
+	 * This function uses reflection to load an instance of the correct class (by reading the opcode in the file) and using the parameter.
+	 * The classes I created only had one constructor but the classes already made (add and lin) had two constructors so I checked to see which the 
+	 * longest constructor was before using it to instantiate the object.
+	 * @param label String The label which has already been stripped from the line of text
+	 * @return newInstruction Instruction The instruction which has been instantiated from reading the line of the text file.
+	 */	
 	public Instruction getInstruction(String label) {
 		if (line.equals(""))
 			return null;
 
 		String ins = scan();
 		try {
+			//load the class for reflection
 			Class<?> instruct = Class.forName("sml."+ ucfirst(ins) + "Instruction");
 			Constructor[] allConstructors = instruct.getDeclaredConstructors();
-			//The largest constructor is the one to use.
+			//The largest constructor is the one to use. Loop through until you find the largest.
 			Constructor largest = null;
 			for (Constructor ctor : allConstructors) {
 				if (largest == null) {
@@ -98,7 +104,7 @@ public class Translator {
 			//Get the correct params back from the file
 			Object[] params = getParams(label, largest);
 			Instruction newInstruct = null;
-			
+			//Create the new instruction. All of these 
 			try {
 				newInstruct = (Instruction) largest.newInstance(params);
 			} catch (InstantiationException e) {
@@ -119,7 +125,13 @@ public class Translator {
 		}
 		
 	}
-	
+	/**
+	 * Places the label as the first item in the array then loops through the constructor's required items, choosing whether
+	 * to use scan or scanInt based upon whether the param is an int or a string.
+	 * @param label String The label which has already been stripped from the line of text. Is going to be the first item in the array.
+	 * @param con Constructor The constructor which is going to be used to create the instance.
+	 * @return params Object[] An array of the correct constructors taken from the file.
+	 */	
 	public Object[] getParams(String label, Constructor con) {
 		Object[] params = new Object[con.getParameterCount()];
 		//Set the first item to be the label
@@ -171,6 +183,11 @@ public class Translator {
 		}
 	}
 	
+	/**
+	 * We need to use this because the classes are named with an upper case.
+	 * @param word String The word that you need to uppercase the first letter of.
+	 * @return ucWord String The word with the transformation
+	 */
 	private static String ucfirst(String word) {
 		String ucWord = "";
 		if ((word.length() > 0) && (word != null)){
