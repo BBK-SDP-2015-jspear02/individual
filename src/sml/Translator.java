@@ -11,10 +11,12 @@ import java.lang.ClassNotFoundException;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 
-
-/*
- * The translator of a <b>S</b><b>M</b>al<b>L</b> program.
+/**
+ * The translator of a <b>S</b><b>M</b>al<b>L</b> program. Uses reflection to open up instances of classes.
+ * 
+ * @author John Spear and BBK
  */
+
 public class Translator {
 
 	// word + line is the part of the current line that's not yet processed
@@ -91,7 +93,9 @@ public class Translator {
 		try {
 			//load the class for reflection
 			Class<?> instruct = Class.forName("sml."+ ucfirst(ins) + "Instruction");
+			if (instruct.getSuperclass().equals(Instruction.class)) {
 			Constructor[] allConstructors = instruct.getDeclaredConstructors();
+			
 			//The largest constructor is the one to use. Loop through until you find the largest.
 			Constructor largest = null;
 			for (Constructor ctor : allConstructors) {
@@ -108,19 +112,24 @@ public class Translator {
 			try {
 				newInstruct = (Instruction) largest.newInstance(params);
 			} catch (InstantiationException e) {
-				System.out.println(e.getMessage());
+				printErrs("Wasn't able to instantiate clas",ucfirst(ins));				
 			} catch (IllegalAccessException e) {
-				System.out.println(e.getMessage());
+				printErrs("Illegal Access Exception with class",ucfirst(ins));				
 			} catch (IllegalArgumentException e) {
-				System.out.println(e.getMessage());
+				printErrs("Illegal Argument Exception with class",ucfirst(ins));				
 			} catch (InvocationTargetException e) {
-				System.out.println(e.getMessage());
+				printErrs("Invocation Exception with class",ucfirst(ins));
 			}
 
 			return newInstruct;
+			
+			} else {
+				printErrs("Class not a subclass of Instruction with",ucfirst(ins));
+				return null;
+			}
+			
 		} catch (ClassNotFoundException ex) {
-
-			System.out.println("sml."+ ins + "Instruction doesn't exist");
+			printErrs("Class not found exception with",ucfirst(ins));
 			return null;
 		}
 		
@@ -201,5 +210,9 @@ public class Translator {
 		for(int i = 0; i < arr.length; i++){
 			System.out.println(arr[i]);
 		}
+	}
+
+	private void printErrs(String msg, String cl) {
+		System.err.println("Error: " + msg + " " + ucfirst(cl) + "Instruction" );
 	}
 }

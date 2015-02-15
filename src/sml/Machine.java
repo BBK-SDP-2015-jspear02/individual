@@ -4,8 +4,10 @@ import java.util.ArrayList;
 
 import lombok.Data;
 
-/*
- * The machine language interpreter
+/**
+ * This is the machie language interpreter.
+ * 
+ * @author BBK
  */
 @Data
 public class Machine {
