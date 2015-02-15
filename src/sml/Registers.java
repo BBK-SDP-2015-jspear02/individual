@@ -3,11 +3,11 @@ package sml;
 import lombok.Data; 
 
 /**
- * This class ....
+ * This class creates a fixed size array of 32 items which represents the contents of 32 registers.
  * 
  * An instance contains 32 registers and methods to access and change them
  * 
- * @author someone
+ * @author John Spear
  */
 
 @Data
